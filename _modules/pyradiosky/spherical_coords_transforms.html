@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>pyradiosky.spherical_coords_transforms &#8212; pyradiosky 0.1.dev1+g9c519d9.add.rtd documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyradiosky.spherical_coords_transforms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- mode: python; coding: utf-8 -*</span>
+<span class="c1"># Copyright (c) 2019 Radio Astronomy Software Group</span>
+<span class="c1"># Licensed under the 3-clause BSD License</span>
+<span class="sd">&quot;&quot;&quot;Methods for doing spherical coordinate transformations on vectors.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="r_hat"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.r_hat">[docs]</a><span class="k">def</span> <span class="nf">r_hat</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the r hat unit vectors in cartesian coordinates for points on a sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta, phi : float</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array of float</span>
+<span class="sd">        Array of r hat vectors, shape (3, Npoints)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;theta and phi must have the same shape&quot;</span><span class="p">)</span>
+    <span class="n">rhx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">rhy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">rhz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">rhx</span><span class="p">,</span> <span class="n">rhy</span><span class="p">,</span> <span class="n">rhz</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="theta_hat"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.theta_hat">[docs]</a><span class="k">def</span> <span class="nf">theta_hat</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the theta hat unit vectors in cartesian coordinates for points on a sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta, phi : float</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array of float</span>
+<span class="sd">        Array of theta hat vectors, shape (3, Npoints)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;theta and phi must have the same shape&quot;</span><span class="p">)</span>
+    <span class="n">thx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">thy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">thz</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">thx</span><span class="p">,</span> <span class="n">thy</span><span class="p">,</span> <span class="n">thz</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="phi_hat"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.phi_hat">[docs]</a><span class="k">def</span> <span class="nf">phi_hat</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the phi hat unit vectors in cartesian coordinates for points on a sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta, phi : float</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array of float</span>
+<span class="sd">        Array of phi hat vectors, shape (3, Npoints)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;theta and phi must have the same shape&quot;</span><span class="p">)</span>
+    <span class="n">phx</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">phy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">phz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">phx</span><span class="p">,</span> <span class="n">phy</span><span class="p">,</span> <span class="n">phz</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rotate_points_3d"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.rotate_points_3d">[docs]</a><span class="k">def</span> <span class="nf">rotate_points_3d</span><span class="p">(</span><span class="n">rot_matrix</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the spherical coordinates of the point under a 3d rotation.</span>
+
+<span class="sd">    Finds the spherical coordinates for point p specified by p = R . q,</span>
+<span class="sd">    where q is the 3D position vector of the point specified by (theta,phi) and</span>
+<span class="sd">    R is the 3D rotation matrix that relates two coordinate charts.</span>
+
+<span class="sd">    The accuracy of this method may not be good enough near pols in either</span>
+<span class="sd">    coordinate system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rot_matrix : array-like of float</span>
+<span class="sd">        rotation matrix to use</span>
+<span class="sd">    theta, phi : float</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    beta, alpha : float</span>
+<span class="sd">        The theta, phi coordinates for the point on the sphere (using normal</span>
+<span class="sd">        mathematical conventions) in the rotated frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># This is NOT written to be vectorized for multiple (theta, phi)</span>
+
+    <span class="n">rot_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rot_matrix</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rot_matrix</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;rot_matrix must be a 3x3 array&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Replace with function call?</span>
+    <span class="n">q_hat_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">q_hat_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">q_hat_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">q_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">q_hat_1</span><span class="p">,</span> <span class="n">q_hat_2</span><span class="p">,</span> <span class="n">q_hat_3</span><span class="p">))</span>
+
+    <span class="c1"># Should test for shape of p_hat</span>
+    <span class="n">p_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ab...,b...-&gt;a...&quot;</span><span class="p">,</span> <span class="n">rot_matrix</span><span class="p">,</span> <span class="n">q_hat</span><span class="p">)</span>
+
+    <span class="c1"># Should write a function to do this as well, i.e., pull back angles from</span>
+    <span class="c1"># a vector</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">p_hat</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+        <span class="n">p_hat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">p_hat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">p_hat</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p_hat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">alpha</span> <span class="o">+=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spherical_basis_vector_rotation_matrix"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.spherical_basis_vector_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">spherical_basis_vector_rotation_matrix</span><span class="p">(</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rot_matrix</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the rotation matrix to take vectors in the theta/phi basis to a new reference frame.</span>
+
+<span class="sd">    Given a position (`theta`, `phi`) in “standard mathematical” coordinates</span>
+<span class="sd">    (0 &lt; `theta` &lt; pi, 0 &lt; `phi` &lt; 2 pi) which will typically be an ICRS RA/Dec</span>
+<span class="sd">    coordinate appropriately converted, and the point to which it is transformed</span>
+<span class="sd">    in another standard mathematical coordinate system (`beta`, `alpha`), which</span>
+<span class="sd">    will typically be local telescope Alt/Az appropriately converted, and a</span>
+<span class="sd">    3 x 3 rotation matrix `rot_matrix` which connects those two points,</span>
+<span class="sd">    calculate the rotation matrix which rotates the basis vectors associated</span>
+<span class="sd">    with (`theta`, `phi`) to those associated with (`beta`, `alpha`).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta, phi : float</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+<span class="sd">    rot_matrix : array-like of float</span>
+<span class="sd">        Rotation matrix that takes 3-vectors from (theta, phi) to (beta, alpha)</span>
+<span class="sd">    beta, alpha : float, optional</span>
+<span class="sd">        The theta, phi coordinates for the point on the sphere (using normal</span>
+<span class="sd">        mathematical conventions) in the rotated frame. If either is not provided,</span>
+<span class="sd">        they are calculated using `rotate_points_3d`. Note these may</span>
+<span class="sd">        not be as exact as values calculated from astropy.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array of float</span>
+<span class="sd">        2 x 2 rotation matrix that takes vectors in the theta/phi basis to</span>
+<span class="sd">        the beta/alpha basis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">beta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">rotate_points_3d</span><span class="p">(</span><span class="n">rot_matrix</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+
+    <span class="n">th</span> <span class="o">=</span> <span class="n">theta_hat</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">phi_hat</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+
+    <span class="n">bh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ab...,b...-&gt;a...&quot;</span><span class="p">,</span> <span class="n">rot_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">theta_hat</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">))</span>
+
+    <span class="n">cosX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;a...,a...&quot;</span><span class="p">,</span> <span class="n">bh</span><span class="p">,</span> <span class="n">th</span><span class="p">)</span>
+    <span class="n">sinX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;a...,a...&quot;</span><span class="p">,</span> <span class="n">bh</span><span class="p">,</span> <span class="n">ph</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cosX</span><span class="p">,</span> <span class="n">sinX</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">sinX</span><span class="p">,</span> <span class="n">cosX</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="axis_angle_rotation_matrix"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.axis_angle_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">axis_angle_rotation_matrix</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the rotation matrix using Rodrigues&#39; rotation matrix formula.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    axis : array-like of float</span>
+<span class="sd">        3 element unit vector specifying the axis to rotate around.</span>
+<span class="sd">    angle : float</span>
+<span class="sd">        angle to rotate by in radians</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">        3x3 rotation matrix to rotate vectors by `angle` around `axis`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis must be a must be length 3 vector&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">axis</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis must be a unit vector&quot;</span><span class="p">)</span>
+
+    <span class="n">K_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">]]</span>
+    <span class="p">)</span>
+
+    <span class="n">I_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">rot_matrix</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">I_matrix</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">K_matrix</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_matrix</span><span class="p">,</span> <span class="n">K_matrix</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rot_matrix</span></div>
+
+
+<div class="viewcode-block" id="is_orthogonal"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.is_orthogonal">[docs]</a><span class="k">def</span> <span class="nf">is_orthogonal</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test for matrix orthogonality.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    matrix : array-like of float</span>
+<span class="sd">        square matrix to test</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if `matrix` is orthogonal, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_unit_vector"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.is_unit_vector">[docs]</a><span class="k">def</span> <span class="nf">is_unit_vector</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test for unit vectors.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vec : array-like of float</span>
+<span class="sd">        vector to test</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if `vec` is a unit vector, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">vec</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="vecs2rot"><a class="viewcode-back" href="../../developer_docs.html#pyradiosky.spherical_coords_transforms.vecs2rot">[docs]</a><span class="k">def</span> <span class="nf">vecs2rot</span><span class="p">(</span><span class="n">r1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">phi1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">phi2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the rotation matrix that connects two points or unit vectors on the sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r1, r2 : array-like of float, optional</span>
+<span class="sd">        length 3 unit vectors</span>
+<span class="sd">    theta1, phi1, theta2, phi2 : float, optional</span>
+<span class="sd">        The co-latitude and azimuth coordinates, respectively, for a point</span>
+<span class="sd">        on the sphere, in radians. Azimuth is defined with respect to the</span>
+<span class="sd">        x axis, co-latitude is the angle with the positive z axis.</span>
+<span class="sd">        Ignored if r1 and r2 are supplied.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">        3x3 rotation matrix that rotates the first point or vector into the other.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">r1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">r2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">theta1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">phi1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">theta2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">phi2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Either r1 and r2 must be supplied or all of &quot;</span>
+                <span class="s2">&quot;theta1, phi1, theta2 and phi2 must be supplied.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">r_hat</span><span class="p">(</span><span class="n">theta1</span><span class="p">,</span> <span class="n">phi1</span><span class="p">)</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">r_hat</span><span class="p">(</span><span class="n">theta2</span><span class="p">,</span> <span class="n">phi2</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">r1</span><span class="p">),</span> <span class="s2">&quot;r1 is not a unit vector: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">r2</span><span class="p">),</span> <span class="s2">&quot;r2 is not a unit vector: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">r1</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span> <span class="ow">or</span> <span class="n">r2</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;r1 and r2 must be length 3 vectors&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">r2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;r1 and r2 must be unit vectors&quot;</span><span class="p">)</span>
+
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+    <span class="c1"># Note that Psi is between 0 and pi</span>
+    <span class="n">sinPsi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span> <span class="n">norm</span><span class="p">))</span>
+    <span class="n">n_hat</span> <span class="o">=</span> <span class="n">norm</span> <span class="o">/</span> <span class="n">sinPsi</span>  <span class="c1"># Trouble lurks if Psi = 0.</span>
+    <span class="n">cosPsi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+    <span class="n">Psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">sinPsi</span><span class="p">,</span> <span class="n">cosPsi</span><span class="p">)</span>
+    <span class="n">rotation</span> <span class="o">=</span> <span class="n">axis_angle_rotation_matrix</span><span class="p">(</span><span class="n">n_hat</span><span class="p">,</span> <span class="n">Psi</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">is_unit_vector</span><span class="p">(</span><span class="n">n_hat</span><span class="p">),</span> <span class="s2">&quot;n_hat is not a unit vector: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_hat</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">is_orthogonal</span><span class="p">(</span><span class="n">rotation</span><span class="p">),</span> <span class="s2">&quot;rotation matrix is not orthogonal: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="n">rotation</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rotation</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyradiosky</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../skymodel_parameters.html">SkyModel Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../skymodel.html">SkyModel Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utility_functions.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_docs.html">Developer Docs</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Radio Astronomy Software Group.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

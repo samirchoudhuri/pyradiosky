@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Utility Functions &#8212; pyradiosky 0.1.dev1+g9c519d9.add.rtd documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer Docs" href="developer_docs.html" />
+    <link rel="prev" title="SkyModel Class" href="skymodel.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-utils">
+<span id="utility-functions"></span><h1>Utility Functions<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility methods.</p>
+<dl class="py function">
+<dt id="utils.coherency_to_stokes">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">coherency_to_stokes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coherency_matrix</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#coherency_to_stokes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.coherency_to_stokes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert coherency matrix to vector of 4 Stokes parameter in order [I, Q, U, V].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>coherency matrix</strong> (<em>array_like of float</em>) – Array of coherencies, shape (2, 2) or (2, 2, Ncomponents)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stokes_vector</strong> (<em>array of float</em>) – Vector(s) of stokes parameters, shape(4,) or (4, Ncomponents)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="utils.jy_to_ksr">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">jy_to_ksr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">freqs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#jy_to_ksr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.jy_to_ksr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate multiplicative factors to convert [Jy] to [K sr].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>freqs</strong> (<em>array_like of float</em>) – Frequencies in Hz.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="utils.stokes_to_coherency">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">stokes_to_coherency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stokes_vector</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#stokes_to_coherency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.stokes_to_coherency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Stokes vector to coherency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stokes_vector</strong> (<em>array_like of float</em>) – Vector(s) of stokes parameters in order [I, Q, U, V], shape(4,) or (4, Nfreqs, Ncomponents)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>coherency matrix</strong> (<em>array of float</em>) – Array of coherencies, shape (2, 2) or (2, 2, Nfreqs, Ncomponents)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyradiosky</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="skymodel_parameters.html">SkyModel Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skymodel.html">SkyModel Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_docs.html">Developer Docs</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="skymodel.html" title="previous chapter">SkyModel Class</a></li>
+      <li>Next: <a href="developer_docs.html" title="next chapter">Developer Docs</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Radio Astronomy Software Group.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/utility_functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

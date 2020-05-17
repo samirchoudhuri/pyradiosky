@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SkyModel Parameters &#8212; pyradiosky 0.1.dev1+g9c519d9.add.rtd documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SkyModel Class" href="skymodel.html" />
+    <link rel="prev" title="pyradiosky" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="skymodel-parameters">
+<h1>SkyModel Parameters<a class="headerlink" href="#skymodel-parameters" title="Permalink to this headline">¶</a></h1>
+<p>These are the standard attributes of SkyModel objects.</p>
+<p>Under the hood they are actually properties based on UVParameter objects.</p>
+<p>Angle type attributes also have convenience properties named the same thing
+with ‘_degrees’ appended through which you can get or set the value in degrees.</p>
+<p>Similarly location type attributes (which are given in topocentric xyz coordinates)
+have convenience properties named the same thing with ‘_lat_lon_alt’ and
+‘_lat_lon_alt_degrees’ appended through which you can get or set the values using
+latitude, longitude and altitude values in radians or degrees and meters.</p>
+<div class="section" id="required">
+<h2>Required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h2>
+<p>These parameters are required to have a sensible SkyModel object and
+are required for most kinds of catalog files.</p>
+<dl class="simple">
+<dt><strong>Ncomponents</strong></dt><dd><p>Number of components</p>
+</dd>
+<dt><strong>Nfreqs</strong></dt><dd><p>Number of frequencies if spectral_type  is ‘full’ or ‘subband’, 1 otherwise.</p>
+</dd>
+<dt><strong>coherency_radec</strong></dt><dd><p>Ra/Dec coherency per component</p>
+</dd>
+<dt><strong>component_type</strong></dt><dd><p>Type of component, options are: ‘healpix’, ‘point’. Determines which parameters are required.</p>
+</dd>
+<dt><strong>dec</strong></dt><dd><p>Declination of components in ICRS coordinates.</p>
+</dd>
+<dt><strong>name</strong></dt><dd><p>Component name, not required for HEALPix maps.</p>
+</dd>
+<dt><strong>ra</strong></dt><dd><p>Right ascension of components in ICRS coordinates.</p>
+</dd>
+<dt><strong>spectral_type</strong></dt><dd><p>Type of spectral flux specification, options are: ‘full’,’flat’, ‘subband’, ‘spectral_index’.</p>
+</dd>
+<dt><strong>stokes</strong></dt><dd><p>Component flux per frequency and Stokes parameter</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="optional">
+<h2>Optional<a class="headerlink" href="#optional" title="Permalink to this headline">¶</a></h2>
+<p>These parameters are defined by one or more file standard but are not always required.
+Some of them are required depending on the spectral_type or component_type (as noted below).</p>
+<dl class="simple">
+<dt><strong>above_horizon</strong></dt><dd><p>Boolean indicator of whether this source is above the horizonat the current time.True indicates the source is above the horizon.</p>
+</dd>
+<dt><strong>alt_az</strong></dt><dd><p>Altitude and Azimuth of components in local coordinates.</p>
+</dd>
+<dt><strong>beam_amp</strong></dt><dd><p>Beam amplitude at the source position as a function of instrument polarization and frequency.</p>
+</dd>
+<dt><strong>extended_model_group</strong></dt><dd><p>Identifier that groups components of an extended source model. Set to -1 for point sources.</p>
+</dd>
+<dt><strong>freq_array</strong></dt><dd><p>Frequency array in Hz, only required if spectral_type is ‘full’ or ‘subband’.</p>
+</dd>
+<dt><strong>hpx_inds</strong></dt><dd><p>Healpix index, only reqired for HEALPix maps.</p>
+</dd>
+<dt><strong>nside</strong></dt><dd><p>Healpix nside, only reqired for HEALPix maps.</p>
+</dd>
+<dt><strong>pos_lmn</strong></dt><dd><p>Position cosines of components in local coordinates.</p>
+</dd>
+<dt><strong>reference_frequency</strong></dt><dd><p>Reference frequency in Hz, only required if spectral_type is ‘spectral_index’.</p>
+</dd>
+<dt><strong>spectral_index</strong></dt><dd><p>Spectral indexm only required if spectral_type is ‘spectral_index’.</p>
+</dd>
+<dt><strong>telescope_location</strong></dt><dd><p>Telescope Location for local position calculations.</p>
+</dd>
+<dt><strong>time</strong></dt><dd><p>Time for local position calculations.</p>
+</dd>
+</dl>
+<p>last updated: 2020-05-17</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyradiosky</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SkyModel Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skymodel.html">SkyModel Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility_functions.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_docs.html">Developer Docs</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">pyradiosky</a></li>
+      <li>Next: <a href="skymodel.html" title="next chapter">SkyModel Class</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Radio Astronomy Software Group.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/skymodel_parameters.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

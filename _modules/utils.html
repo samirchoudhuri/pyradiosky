@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>utils &#8212; pyradiosky 0.1.dev1+g9c519d9.add.rtd documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- mode: python; coding: utf-8 -*</span>
+<span class="c1"># Copyright (c) 2019 Radio Astronomy Software Group</span>
+<span class="c1"># Licensed under the 3-clause BSD License</span>
+<span class="sd">&quot;&quot;&quot;Utility methods.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.constants</span> <span class="kn">import</span> <span class="n">c</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">_erfa</span> <span class="k">as</span> <span class="n">erfa</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates.builtin_frames.utils</span> <span class="kn">import</span> <span class="n">get_jd12</span>
+<span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+
+
+<span class="c1"># The frame radio astronomers call the apparent or current epoch is the</span>
+<span class="c1"># &quot;true equator &amp; equinox&quot; frame, notated E_upsilon in the USNO circular</span>
+<span class="c1"># astropy doesn&#39;t have this frame but it&#39;s pretty easy to adapt the CIRS frame</span>
+<span class="c1"># by modifying the ra to reflect the difference between</span>
+<span class="c1"># GAST (Grenwich Apparent Sidereal Time) and the earth rotation angle (theta)</span>
+<span class="k">def</span> <span class="nf">_tee_to_cirs_ra</span><span class="p">(</span><span class="n">tee_ra</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from the true equator &amp; equinox frame to the CIRS frame.</span>
+
+<span class="sd">    The frame radio astronomers call the apparent or current epoch is the</span>
+<span class="sd">    &quot;true equator &amp; equinox&quot; frame, notated E_upsilon in the USNO circular</span>
+<span class="sd">    astropy doesn&#39;t have this frame but it&#39;s pretty easy to adapt the CIRS frame</span>
+<span class="sd">    by modifying the ra to reflect the difference between</span>
+<span class="sd">    GAST (Grenwich Apparent Sidereal Time) and the earth rotation angle (theta)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tee_ra : :class:`astropy.Angle`</span>
+<span class="sd">        Current epoch RA (RA in the true equator and equinox frame).</span>
+<span class="sd">    time : :class:`astropy.Time`</span>
+<span class="sd">        Time object for the epoch of the `tee_ra`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">era</span> <span class="o">=</span> <span class="n">erfa</span><span class="o">.</span><span class="n">era00</span><span class="p">(</span><span class="o">*</span><span class="n">get_jd12</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s2">&quot;ut1&quot;</span><span class="p">))</span>
+    <span class="n">theta_earth</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">era</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;rad&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">Time</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tee_ra</span><span class="p">,</span> <span class="n">Angle</span><span class="p">)</span>
+    <span class="n">gast</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">sidereal_time</span><span class="p">(</span><span class="s2">&quot;apparent&quot;</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cirs_ra</span> <span class="o">=</span> <span class="n">tee_ra</span> <span class="o">-</span> <span class="p">(</span><span class="n">gast</span> <span class="o">-</span> <span class="n">theta_earth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cirs_ra</span>
+
+
+<span class="k">def</span> <span class="nf">_cirs_to_tee_ra</span><span class="p">(</span><span class="n">cirs_ra</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from CIRS frame to the true equator &amp; equinox frame.</span>
+
+<span class="sd">    The frame radio astronomers call the apparent or current epoch is the</span>
+<span class="sd">    &quot;true equator &amp; equinox&quot; frame, notated E_upsilon in the USNO circular</span>
+<span class="sd">    astropy doesn&#39;t have this frame but it&#39;s pretty easy to adapt the CIRS frame</span>
+<span class="sd">    by modifying the ra to reflect the difference between</span>
+<span class="sd">    GAST (Grenwich Apparent Sidereal Time) and the earth rotation angle (theta)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cirs_ra : :class:`astropy.Angle`</span>
+<span class="sd">        CIRS RA.</span>
+<span class="sd">    time : :class:`astropy.Time`</span>
+<span class="sd">        Time object for time to convert to the &quot;true equator &amp; equinox&quot; frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">era</span> <span class="o">=</span> <span class="n">erfa</span><span class="o">.</span><span class="n">era00</span><span class="p">(</span><span class="o">*</span><span class="n">get_jd12</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s2">&quot;ut1&quot;</span><span class="p">))</span>
+    <span class="n">theta_earth</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">era</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;rad&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">Time</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cirs_ra</span><span class="p">,</span> <span class="n">Angle</span><span class="p">)</span>
+    <span class="n">gast</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">sidereal_time</span><span class="p">(</span><span class="s2">&quot;apparent&quot;</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">tee_ra</span> <span class="o">=</span> <span class="n">cirs_ra</span> <span class="o">+</span> <span class="p">(</span><span class="n">gast</span> <span class="o">-</span> <span class="n">theta_earth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tee_ra</span>
+
+
+<div class="viewcode-block" id="stokes_to_coherency"><a class="viewcode-back" href="../utility_functions.html#utils.stokes_to_coherency">[docs]</a><span class="k">def</span> <span class="nf">stokes_to_coherency</span><span class="p">(</span><span class="n">stokes_vector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert Stokes vector to coherency matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    stokes_vector : array_like of float</span>
+<span class="sd">        Vector(s) of stokes parameters in order [I, Q, U, V], shape(4,) or (4, Nfreqs, Ncomponents)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    coherency matrix : array of float</span>
+<span class="sd">        Array of coherencies, shape (2, 2) or (2, 2, Nfreqs, Ncomponents)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stokes_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">stokes_vector</span><span class="p">))</span>
+    <span class="n">initial_shape</span> <span class="o">=</span> <span class="n">stokes_arr</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">initial_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First dimension of stokes_vector must be length 4.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">stokes_arr</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">stokes_arr</span> <span class="o">=</span> <span class="n">stokes_arr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+    <span class="n">coherency</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+                <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="p">],</span>
+            <span class="p">[</span>
+                <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+                <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">stokes_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">stokes_arr</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">coherency</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">coherency</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coherency</span></div>
+
+
+<div class="viewcode-block" id="coherency_to_stokes"><a class="viewcode-back" href="../utility_functions.html#utils.coherency_to_stokes">[docs]</a><span class="k">def</span> <span class="nf">coherency_to_stokes</span><span class="p">(</span><span class="n">coherency_matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert coherency matrix to vector of 4 Stokes parameter in order [I, Q, U, V].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coherency matrix : array_like of float</span>
+<span class="sd">        Array of coherencies, shape (2, 2) or (2, 2, Ncomponents)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    stokes_vector : array of float</span>
+<span class="sd">        Vector(s) of stokes parameters, shape(4,) or (4, Ncomponents)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coherency_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">coherency_matrix</span><span class="p">)</span>
+    <span class="n">initial_shape</span> <span class="o">=</span> <span class="n">coherency_arr</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_shape</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">initial_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">initial_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First two dimensions of coherency_matrix must be length 2.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">coherency_arr</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">coherency_arr</span> <span class="o">=</span> <span class="n">coherency_arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+    <span class="n">stokes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="o">-</span><span class="p">(</span><span class="n">coherency_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">coherency_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">if</span> <span class="n">coherency_arr</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">stokes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">stokes</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stokes</span></div>
+
+
+<div class="viewcode-block" id="jy_to_ksr"><a class="viewcode-back" href="../utility_functions.html#utils.jy_to_ksr">[docs]</a><span class="k">def</span> <span class="nf">jy_to_ksr</span><span class="p">(</span><span class="n">freqs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate multiplicative factors to convert [Jy] to [K sr].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    freqs : array_like of float</span>
+<span class="sd">        Frequencies in Hz.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c_cmps</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm/s&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># cm/s</span>
+    <span class="n">k_boltz</span> <span class="o">=</span> <span class="mf">1.380658e-16</span>  <span class="c1"># erg/K</span>
+    <span class="n">lambdas</span> <span class="o">=</span> <span class="n">c_cmps</span> <span class="o">/</span> <span class="n">freqs</span>  <span class="c1"># cm</span>
+    <span class="k">return</span> <span class="mf">1e-23</span> <span class="o">*</span> <span class="n">lambdas</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k_boltz</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">pyradiosky</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../skymodel_parameters.html">SkyModel Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../skymodel.html">SkyModel Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utility_functions.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_docs.html">Developer Docs</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Radio Astronomy Software Group.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,88 @@
+SkyModel Parameters
+==========================
+These are the standard attributes of SkyModel objects.
+
+Under the hood they are actually properties based on UVParameter objects.
+
+Angle type attributes also have convenience properties named the same thing 
+with '_degrees' appended through which you can get or set the value in degrees.
+
+Similarly location type attributes (which are given in topocentric xyz coordinates) 
+have convenience properties named the same thing with '_lat_lon_alt' and 
+'_lat_lon_alt_degrees' appended through which you can get or set the values using 
+latitude, longitude and altitude values in radians or degrees and meters.
+
+Required
+----------------
+These parameters are required to have a sensible SkyModel object and 
+are required for most kinds of catalog files.
+
+**Ncomponents**
+     Number of components
+
+**Nfreqs**
+     Number of frequencies if spectral_type  is 'full' or 'subband', 1 otherwise.
+
+**coherency_radec**
+     Ra/Dec coherency per component
+
+**component_type**
+     Type of component, options are: 'healpix', 'point'. Determines which parameters are required.
+
+**dec**
+     Declination of components in ICRS coordinates.
+
+**name**
+     Component name, not required for HEALPix maps.
+
+**ra**
+     Right ascension of components in ICRS coordinates.
+
+**spectral_type**
+     Type of spectral flux specification, options are: 'full','flat', 'subband', 'spectral_index'.
+
+**stokes**
+     Component flux per frequency and Stokes parameter
+
+Optional
+----------------
+These parameters are defined by one or more file standard but are not always required.
+Some of them are required depending on the spectral_type or component_type (as noted below).
+
+**above_horizon**
+     Boolean indicator of whether this source is above the horizonat the current time.True indicates the source is above the horizon.
+
+**alt_az**
+     Altitude and Azimuth of components in local coordinates.
+
+**beam_amp**
+     Beam amplitude at the source position as a function of instrument polarization and frequency.
+
+**extended_model_group**
+     Identifier that groups components of an extended source model. Set to -1 for point sources.
+
+**freq_array**
+     Frequency array in Hz, only required if spectral_type is 'full' or 'subband'.
+
+**hpx_inds**
+     Healpix index, only reqired for HEALPix maps.
+
+**nside**
+     Healpix nside, only reqired for HEALPix maps.
+
+**pos_lmn**
+     Position cosines of components in local coordinates.
+
+**reference_frequency**
+     Reference frequency in Hz, only required if spectral_type is 'spectral_index'.
+
+**spectral_index**
+     Spectral indexm only required if spectral_type is 'spectral_index'.
+
+**telescope_location**
+     Telescope Location for local position calculations.
+
+**time**
+     Time for local position calculations.
+
+last updated: 2020-05-17
