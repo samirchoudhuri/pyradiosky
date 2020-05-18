@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>SkyModel Class &#8212; pyradiosky 0.1.dev1+g5169602.head documentation</title>
+    <title>SkyModel Class &#8212; pyradiosky 0.1.dev1+gd027f86.head documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -87,6 +87,13 @@ polarizations.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt id="pyradiosky.SkyModel.set_spectral_type_params">
+<code class="sig-name descname">set_spectral_type_params</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spectral_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.set_spectral_type_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.set_spectral_type_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parameters depending on spectral_type.</p>
+<p>Deprecated, use _set_spectral_type_params</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyradiosky.SkyModel.check">
 <code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check that all required parameters are set reasonably.</p>
@@ -97,6 +104,25 @@ Optionally check if the values are acceptable.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>check_extra</strong> (<em>bool</em>) – Option to check optional parameters as well as required ones.</p></li>
 <li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check if values in required parameters are acceptable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyradiosky.SkyModel.update_positions">
+<code class="sig-name descname">update_positions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em>, <em class="sig-param"><span class="n">telescope_location</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.update_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.update_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the altitude/azimuth positions for source components.</p>
+<p>From alt/az, calculate direction cosines (lmn)</p>
+<p>Doesn’t return anything but updates the following attributes in-place:
+* <code class="docutils literal notranslate"><span class="pre">pos_lmn</span></code>
+* <code class="docutils literal notranslate"><span class="pre">alt_az</span></code>
+* <code class="docutils literal notranslate"><span class="pre">time</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Time</span></code>) – Time to update positions for.</p></li>
+<li><p><strong>telescope_location</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.EarthLocation</span></code>) – Telescope location to update positions for.</p></li>
 </ul>
 </dd>
 </dl>
@@ -122,13 +148,17 @@ compatibility and sets the EarthLocation on this SkyModel object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pyradiosky.SkyModel.from_recarray">
-<code class="sig-name descname">from_recarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recarray_in</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.from_recarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.from_recarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize this object from a recarray.</p>
+<dt id="pyradiosky.SkyModel.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">component_inds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downselect data to keep on the object along various axes.</p>
+<p>Currently this only supports downselecting based on the component axis,
+but this will be expanded to support other axes as well.</p>
+<p>The history attribute on the object will be updated to identify the
+operations performed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recarray_in</strong> (<em>recarray</em>) – recarray to turn into a SkyModel object.</p></li>
+<li><p><strong>component_inds</strong> (<em>array_like of int</em>) – Component indices to keep on the object.</p></li>
 <li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
 after downselecting data on this object (the default is True,
 meaning the check will be run).</p></li>
@@ -137,39 +167,74 @@ default is True, meaning the optional parameters will be checked).</p></li>
 <li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
 downselecting data on this object (the default is True, meaning the
 acceptable range check will be done).</p></li>
+<li><p><strong>inplace</strong> (<em>bool</em>) – Option to perform the select directly on self or return a new SkyModel
+object with just the selected data (the default is True, meaning the
+select will be done on self).</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pyradiosky.SkyModel.read_gleam_catalog">
-<code class="sig-name descname">read_gleam_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gleam_file</span></em>, <em class="sig-param"><span class="n">spectral_type</span><span class="o">=</span><span class="default_value">'flat'</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_gleam_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_gleam_catalog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the GLEAM votable catalog file into this object.</p>
-<p>Tested on: GLEAM EGC catalog, version 2</p>
+<dt id="pyradiosky.SkyModel.source_cuts">
+<code class="sig-name descname">source_cuts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">latitude_deg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">horizon_buffer</span><span class="o">=</span><span class="default_value">0.04364</span></em>, <em class="sig-param"><span class="n">min_flux</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_flux</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">freq_range</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.source_cuts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.source_cuts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform flux and horizon selections.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>gleam_file</strong> (<em>str</em>) – Path to GLEAM votable catalog file.</p></li>
-<li><p><strong>spectral_type</strong> (<em>str</em>) – One of ‘flat’, ‘subband’ or ‘spectral_index’. If set to ‘flat’, the
-wide band integrated flux will be used, if set to ‘spectral_index’ the
-fitted flux at 200 MHz will be used for the flux column.</p></li>
-<li><p><strong>return_table</strong> (<em>bool, optional</em>) – Whether to return the astropy table instead of a SkyModel object.</p></li>
-<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection Valid options:</p>
-<ul>
-<li><p><cite>lst_array</cite>: For coarse RA horizon cuts, lsts used in the simulation [radians]</p></li>
-<li><dl class="simple">
-<dt><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</dt><dd><p>horizon cut.</p>
+<li><p><strong>latitude_deg</strong> (<em>float</em>) – Latitude of telescope in degrees. Used to estimate rise/set lst.</p></li>
+<li><p><strong>horizon_buffer</strong> (<em>float</em>) – Angle buffer for coarse horizon cut in radians.
+Default is about 10 minutes of sky rotation. Components whose
+calculated altitude is less than <cite>horizon_buffer</cite> are excluded.
+Caution! The altitude calculation does not account for
+precession/nutation of the Earth.
+The buffer angle is needed to ensure that the horizon cut doesn’t
+exclude sources near but above the horizon. Since the cutoff is
+done using lst, and the lsts are calculated with astropy, the
+required buffer should _not_ drift with time since the J2000 epoch.
+The default buffer has been tested around julian date 2457458.0.</p></li>
+<li><p><strong>min_flux</strong> (<em>float</em>) – Minimum stokes I flux to select [Jy]</p></li>
+<li><p><strong>max_flux</strong> (<em>float</em>) – Maximum stokes I flux to select [Jy]</p></li>
+<li><p><strong>freq_range</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequency range over which the min and max flux tests should be performed.
+Must be length 2. If None, use the range over which the object is defined.</p></li>
+<li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
+after downselecting data on this object (the default is True,
+meaning the check will be run).</p></li>
+<li><p><strong>check_extra</strong> (<em>bool</em>) – Option to check optional parameters as well as required ones (the
+default is True, meaning the optional parameters will be checked).</p></li>
+<li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
+downselecting data on this object (the default is True, meaning the
+acceptable range check will be done).</p></li>
+<li><p><strong>inplace</strong> (<em>bool</em>) – Option to do the cuts on the object in place or to return a copy
+with the cuts applied.</p></li>
+</ul>
 </dd>
 </dl>
-</li>
-<li><p><cite>horizon_buffer</cite>: Angle (float, in radians) of buffer for coarse horizon cut.
-Default is about 10 minutes of sky rotation. (See caveats in
-<code class="xref py py-func docutils literal notranslate"><span class="pre">array_to_skymodel()</span></code> docstring)</p></li>
-<li><p><cite>min_flux</cite>: Minimum stokes I flux to select [Jy]</p></li>
-<li><p><cite>max_flux</cite>: Maximum stokes I flux to select [Jy]</p></li>
-</ul>
-</li>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyradiosky.SkyModel.to_recarray">
+<code class="sig-name descname">to_recarray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.to_recarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.to_recarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a recarray of source components from this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>catalog_table</strong> (<em>recarray</em>) – recarray equivalent to SkyModel data.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This stores all SkyModel data in a contiguous array
+that can be more easily handled with numpy.
+This is used by pyuvsim for sharing catalog data via MPI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyradiosky.SkyModel.from_recarray">
+<code class="sig-name descname">from_recarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recarray_in</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.from_recarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.from_recarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize this object from a recarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recarray_in</strong> (<em>recarray</em>) – recarray to turn into a SkyModel object.</p></li>
 <li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
 after downselecting data on this object (the default is True,
 meaning the check will be run).</p></li>
@@ -207,20 +272,71 @@ acceptable range check will be done).</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pyradiosky.SkyModel.read_idl_catalog">
-<code class="sig-name descname">read_idl_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename_sav</span></em>, <em class="sig-param"><span class="n">expand_extended</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_idl_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_idl_catalog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read in an FHD-readable IDL .sav file catalog.</p>
+<dt id="pyradiosky.SkyModel.read_votable_catalog">
+<code class="sig-name descname">read_votable_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">votable_file</span></em>, <em class="sig-param"><span class="n">table_name</span></em>, <em class="sig-param"><span class="n">id_column</span></em>, <em class="sig-param"><span class="n">ra_column</span></em>, <em class="sig-param"><span class="n">dec_column</span></em>, <em class="sig-param"><span class="n">flux_columns</span></em>, <em class="sig-param"><span class="n">reference_frequency</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">freq_array</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">spectral_index_column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_votable_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_votable_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a votable catalog file into this object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename_sav</strong> (<em>str</em>) – Path to IDL .sav file.</p></li>
-<li><p><strong>expand_extended</strong> (<em>bool</em>) – If True, return extended source components.
-Default: True</p></li>
-<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection. Valid options:</p>
+<li><p><strong>votable_file</strong> (<em>str</em>) – Path to votable catalog file.</p></li>
+<li><p><strong>table_name</strong> (<em>str</em>) – Part of expected table name. Should match only one table name in votable_file.</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – Part of expected ID column. Should match only one column in the table.</p></li>
+<li><p><strong>ra_column</strong> (<em>str</em>) – Part of expected RA column. Should match only one column in the table.</p></li>
+<li><p><strong>dec_column</strong> (<em>str</em>) – Part of expected Dec column. Should match only one column in the table.</p></li>
+<li><p><strong>flux_columns</strong> (<em>str or list of str</em>) – Part of expected Flux column(s). Each one should match only one column in the table.</p></li>
+<li><p><strong>reference_frequency</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Reference frequency for flux values, assumed to be the same value for all rows.</p></li>
+<li><p><strong>freq_array</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequencies corresponding to flux_columns (should be same length).
+Required for multiple flux columns.</p></li>
+<li><p><strong>return_table</strong> (<em>bool, optional</em>) – Whether to return the astropy table instead of a list of Source objects.</p></li>
+<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection Valid options:</p>
 <ul>
 <li><p><cite>lst_array</cite>: For coarse RA horizon cuts, lsts used in the simulation [radians]</p></li>
-<li><p><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</p></li>
-<li><p>horizon cut.</p></li>
+<li><dl class="simple">
+<dt><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</dt><dd><p>horizon cut.</p>
+</dd>
+</dl>
+</li>
+<li><p><cite>horizon_buffer</cite>: Angle (float, in radians) of buffer for coarse horizon cut.
+Default is about 10 minutes of sky rotation. (See caveats in
+<code class="xref py py-func docutils literal notranslate"><span class="pre">source_cuts()</span></code> docstring)</p></li>
+<li><p><cite>min_flux</cite>: Minimum stokes I flux to select [Jy]</p></li>
+<li><p><cite>max_flux</cite>: Maximum stokes I flux to select [Jy]</p></li>
+</ul>
+</li>
+<li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
+after downselecting data on this object (the default is True,
+meaning the check will be run).</p></li>
+<li><p><strong>check_extra</strong> (<em>bool</em>) – Option to check optional parameters as well as required ones (the
+default is True, meaning the optional parameters will be checked).</p></li>
+<li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
+downselecting data on this object (the default is True, meaning the
+acceptable range check will be done).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyradiosky.SkyModel.read_gleam_catalog">
+<code class="sig-name descname">read_gleam_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gleam_file</span></em>, <em class="sig-param"><span class="n">spectral_type</span><span class="o">=</span><span class="default_value">'flat'</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_gleam_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_gleam_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the GLEAM votable catalog file into this object.</p>
+<p>Tested on: GLEAM EGC catalog, version 2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gleam_file</strong> (<em>str</em>) – Path to GLEAM votable catalog file.</p></li>
+<li><p><strong>spectral_type</strong> (<em>str</em>) – One of ‘flat’, ‘subband’ or ‘spectral_index’. If set to ‘flat’, the
+wide band integrated flux will be used, if set to ‘spectral_index’ the
+fitted flux at 200 MHz will be used for the flux column.</p></li>
+<li><p><strong>return_table</strong> (<em>bool, optional</em>) – Whether to return the astropy table instead of a SkyModel object.</p></li>
+<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection Valid options:</p>
+<ul>
+<li><p><cite>lst_array</cite>: For coarse RA horizon cuts, lsts used in the simulation [radians]</p></li>
+<li><dl class="simple">
+<dt><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</dt><dd><p>horizon cut.</p>
+</dd>
+</dl>
+</li>
 <li><p><cite>horizon_buffer</cite>: Angle (float, in radians) of buffer for coarse horizon cut.
 Default is about 10 minutes of sky rotation. (See caveats in
 <code class="xref py py-func docutils literal notranslate"><span class="pre">array_to_skymodel()</span></code> docstring)</p></li>
@@ -288,33 +404,23 @@ acceptable range check will be done).</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pyradiosky.SkyModel.read_votable_catalog">
-<code class="sig-name descname">read_votable_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">votable_file</span></em>, <em class="sig-param"><span class="n">table_name</span></em>, <em class="sig-param"><span class="n">id_column</span></em>, <em class="sig-param"><span class="n">ra_column</span></em>, <em class="sig-param"><span class="n">dec_column</span></em>, <em class="sig-param"><span class="n">flux_columns</span></em>, <em class="sig-param"><span class="n">reference_frequency</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">freq_array</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">spectral_index_column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_votable_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_votable_catalog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a votable catalog file into this object.</p>
+<dt id="pyradiosky.SkyModel.read_idl_catalog">
+<code class="sig-name descname">read_idl_catalog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename_sav</span></em>, <em class="sig-param"><span class="n">expand_extended</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">source_select_kwds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.read_idl_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.read_idl_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in an FHD-readable IDL .sav file catalog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>votable_file</strong> (<em>str</em>) – Path to votable catalog file.</p></li>
-<li><p><strong>table_name</strong> (<em>str</em>) – Part of expected table name. Should match only one table name in votable_file.</p></li>
-<li><p><strong>id_column</strong> (<em>str</em>) – Part of expected ID column. Should match only one column in the table.</p></li>
-<li><p><strong>ra_column</strong> (<em>str</em>) – Part of expected RA column. Should match only one column in the table.</p></li>
-<li><p><strong>dec_column</strong> (<em>str</em>) – Part of expected Dec column. Should match only one column in the table.</p></li>
-<li><p><strong>flux_columns</strong> (<em>str or list of str</em>) – Part of expected Flux column(s). Each one should match only one column in the table.</p></li>
-<li><p><strong>reference_frequency</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Reference frequency for flux values, assumed to be the same value for all rows.</p></li>
-<li><p><strong>freq_array</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequencies corresponding to flux_columns (should be same length).
-Required for multiple flux columns.</p></li>
-<li><p><strong>return_table</strong> (<em>bool, optional</em>) – Whether to return the astropy table instead of a list of Source objects.</p></li>
-<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection Valid options:</p>
+<li><p><strong>filename_sav</strong> (<em>str</em>) – Path to IDL .sav file.</p></li>
+<li><p><strong>expand_extended</strong> (<em>bool</em>) – If True, return extended source components.
+Default: True</p></li>
+<li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection. Valid options:</p>
 <ul>
 <li><p><cite>lst_array</cite>: For coarse RA horizon cuts, lsts used in the simulation [radians]</p></li>
-<li><dl class="simple">
-<dt><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</dt><dd><p>horizon cut.</p>
-</dd>
-</dl>
-</li>
+<li><p><cite>latitude_deg</cite>: Latitude of telescope in degrees. Used for declination coarse</p></li>
+<li><p>horizon cut.</p></li>
 <li><p><cite>horizon_buffer</cite>: Angle (float, in radians) of buffer for coarse horizon cut.
 Default is about 10 minutes of sky rotation. (See caveats in
-<code class="xref py py-func docutils literal notranslate"><span class="pre">source_cuts()</span></code> docstring)</p></li>
+<code class="xref py py-func docutils literal notranslate"><span class="pre">array_to_skymodel()</span></code> docstring)</p></li>
 <li><p><cite>min_flux</cite>: Minimum stokes I flux to select [Jy]</p></li>
 <li><p><cite>max_flux</cite>: Maximum stokes I flux to select [Jy]</p></li>
 </ul>
@@ -327,112 +433,6 @@ default is True, meaning the optional parameters will be checked).</p></li>
 <li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
 downselecting data on this object (the default is True, meaning the
 acceptable range check will be done).</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyradiosky.SkyModel.select">
-<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">component_inds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downselect data to keep on the object along various axes.</p>
-<p>Currently this only supports downselecting based on the component axis,
-but this will be expanded to support other axes as well.</p>
-<p>The history attribute on the object will be updated to identify the
-operations performed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>component_inds</strong> (<em>array_like of int</em>) – Component indices to keep on the object.</p></li>
-<li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
-after downselecting data on this object (the default is True,
-meaning the check will be run).</p></li>
-<li><p><strong>check_extra</strong> (<em>bool</em>) – Option to check optional parameters as well as required ones (the
-default is True, meaning the optional parameters will be checked).</p></li>
-<li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
-downselecting data on this object (the default is True, meaning the
-acceptable range check will be done).</p></li>
-<li><p><strong>inplace</strong> (<em>bool</em>) – Option to perform the select directly on self or return a new SkyModel
-object with just the selected data (the default is True, meaning the
-select will be done on self).</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyradiosky.SkyModel.set_spectral_type_params">
-<code class="sig-name descname">set_spectral_type_params</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spectral_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.set_spectral_type_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.set_spectral_type_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set parameters depending on spectral_type.</p>
-<p>Deprecated, use _set_spectral_type_params</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyradiosky.SkyModel.source_cuts">
-<code class="sig-name descname">source_cuts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">latitude_deg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">horizon_buffer</span><span class="o">=</span><span class="default_value">0.04364</span></em>, <em class="sig-param"><span class="n">min_flux</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_flux</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">freq_range</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">run_check</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_extra</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">run_check_acceptability</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.source_cuts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.source_cuts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform flux and horizon selections.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>latitude_deg</strong> (<em>float</em>) – Latitude of telescope in degrees. Used to estimate rise/set lst.</p></li>
-<li><p><strong>horizon_buffer</strong> (<em>float</em>) – Angle buffer for coarse horizon cut in radians.
-Default is about 10 minutes of sky rotation. Components whose
-calculated altitude is less than <cite>horizon_buffer</cite> are excluded.
-Caution! The altitude calculation does not account for
-precession/nutation of the Earth.
-The buffer angle is needed to ensure that the horizon cut doesn’t
-exclude sources near but above the horizon. Since the cutoff is
-done using lst, and the lsts are calculated with astropy, the
-required buffer should _not_ drift with time since the J2000 epoch.
-The default buffer has been tested around julian date 2457458.0.</p></li>
-<li><p><strong>min_flux</strong> (<em>float</em>) – Minimum stokes I flux to select [Jy]</p></li>
-<li><p><strong>max_flux</strong> (<em>float</em>) – Maximum stokes I flux to select [Jy]</p></li>
-<li><p><strong>freq_range</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequency range over which the min and max flux tests should be performed.
-Must be length 2. If None, use the range over which the object is defined.</p></li>
-<li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
-after downselecting data on this object (the default is True,
-meaning the check will be run).</p></li>
-<li><p><strong>check_extra</strong> (<em>bool</em>) – Option to check optional parameters as well as required ones (the
-default is True, meaning the optional parameters will be checked).</p></li>
-<li><p><strong>run_check_acceptability</strong> (<em>bool</em>) – Option to check acceptable range of the values of parameters after
-downselecting data on this object (the default is True, meaning the
-acceptable range check will be done).</p></li>
-<li><p><strong>inplace</strong> (<em>bool</em>) – Option to do the cuts on the object in place or to return a copy
-with the cuts applied.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyradiosky.SkyModel.to_recarray">
-<code class="sig-name descname">to_recarray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.to_recarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.to_recarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a recarray of source components from this object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>catalog_table</strong> (<em>recarray</em>) – recarray equivalent to SkyModel data.</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>This stores all SkyModel data in a contiguous array
-that can be more easily handled with numpy.
-This is used by pyuvsim for sharing catalog data via MPI.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyradiosky.SkyModel.update_positions">
-<code class="sig-name descname">update_positions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em>, <em class="sig-param"><span class="n">telescope_location</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.update_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.update_positions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the altitude/azimuth positions for source components.</p>
-<p>From alt/az, calculate direction cosines (lmn)</p>
-<p>Doesn’t return anything but updates the following attributes in-place:
-* <code class="docutils literal notranslate"><span class="pre">pos_lmn</span></code>
-* <code class="docutils literal notranslate"><span class="pre">alt_az</span></code>
-* <code class="docutils literal notranslate"><span class="pre">time</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Time</span></code>) – Time to update positions for.</p></li>
-<li><p><strong>telescope_location</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.EarthLocation</span></code>) – Telescope location to update positions for.</p></li>
 </ul>
 </dd>
 </dl>

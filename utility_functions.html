@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Utility Functions &#8212; pyradiosky 0.1.dev1+g5169602.head documentation</title>
+    <title>Utility Functions &#8212; pyradiosky 0.1.dev1+gd027f86.head documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -36,6 +36,20 @@
 <span id="utility-functions"></span><h1>Utility Functions<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
 <p>Utility methods.</p>
 <dl class="py function">
+<dt id="utils.stokes_to_coherency">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">stokes_to_coherency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stokes_vector</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#stokes_to_coherency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.stokes_to_coherency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Stokes vector to coherency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stokes_vector</strong> (<em>array_like of float</em>) – Vector(s) of stokes parameters in order [I, Q, U, V], shape(4,) or (4, Nfreqs, Ncomponents)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>coherency matrix</strong> (<em>array of float</em>) – Array of coherencies, shape (2, 2) or (2, 2, Nfreqs, Ncomponents)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="utils.coherency_to_stokes">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">coherency_to_stokes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coherency_matrix</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#coherency_to_stokes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.coherency_to_stokes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert coherency matrix to vector of 4 Stokes parameter in order [I, Q, U, V].</p>
@@ -56,20 +70,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>freqs</strong> (<em>array_like of float</em>) – Frequencies in Hz.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="utils.stokes_to_coherency">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">stokes_to_coherency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stokes_vector</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#stokes_to_coherency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.stokes_to_coherency" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert Stokes vector to coherency matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stokes_vector</strong> (<em>array_like of float</em>) – Vector(s) of stokes parameters in order [I, Q, U, V], shape(4,) or (4, Nfreqs, Ncomponents)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>coherency matrix</strong> (<em>array of float</em>) – Array of coherencies, shape (2, 2) or (2, 2, Nfreqs, Ncomponents)</p>
 </dd>
 </dl>
 </dd></dl>

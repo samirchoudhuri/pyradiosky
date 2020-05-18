@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Developer Docs &#8212; pyradiosky 0.1.dev1+g5169602.head documentation</title>
+    <title>Developer Docs &#8212; pyradiosky 0.1.dev1+gd027f86.head documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -39,46 +39,33 @@ won’t need to interact with.</p>
 <span id="spherical-coords-transforms"></span><h2>spherical_coords_transforms<a class="headerlink" href="#module-pyradiosky.spherical_coords_transforms" title="Permalink to this headline">¶</a></h2>
 <p>Methods for doing spherical coordinate transformations on vectors.</p>
 <dl class="py function">
-<dt id="pyradiosky.spherical_coords_transforms.axis_angle_rotation_matrix">
-<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">axis_angle_rotation_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">axis</span></em>, <em class="sig-param"><span class="n">angle</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#axis_angle_rotation_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.axis_angle_rotation_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the rotation matrix using Rodrigues’ rotation matrix formula.</p>
+<dt id="pyradiosky.spherical_coords_transforms.r_hat">
+<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">r_hat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">phi</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#r_hat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.r_hat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the r hat unit vectors in cartesian coordinates for points on a sphere.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (<em>array-like of float</em>) – 3 element unit vector specifying the axis to rotate around.</p></li>
-<li><p><strong>angle</strong> (<em>float</em>) – angle to rotate by in radians</p></li>
-</ul>
+<dd class="field-odd"><p><strong>theta, phi</strong> (<em>float</em>) – The co-latitude and azimuth coordinates, respectively, for a point
+on the sphere, in radians. Azimuth is defined with respect to the
+x axis, co-latitude is the angle with the positive z axis.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>array</em> – 3x3 rotation matrix to rotate vectors by <cite>angle</cite> around <cite>axis</cite>.</p>
+<dd class="field-even"><p><em>array of float</em> – Array of r hat vectors, shape (3, Npoints)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pyradiosky.spherical_coords_transforms.is_orthogonal">
-<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">is_orthogonal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-15</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#is_orthogonal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.is_orthogonal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for matrix orthogonality.</p>
+<dt id="pyradiosky.spherical_coords_transforms.theta_hat">
+<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">theta_hat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">phi</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#theta_hat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.theta_hat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the theta hat unit vectors in cartesian coordinates for points on a sphere.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>array-like of float</em>) – square matrix to test</p>
+<dd class="field-odd"><p><strong>theta, phi</strong> (<em>float</em>) – The co-latitude and azimuth coordinates, respectively, for a point
+on the sphere, in radians. Azimuth is defined with respect to the
+x axis, co-latitude is the angle with the positive z axis.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>bool</em> – True if <cite>matrix</cite> is orthogonal, False otherwise.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyradiosky.spherical_coords_transforms.is_unit_vector">
-<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">is_unit_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vec</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-15</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#is_unit_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.is_unit_vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for unit vectors.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>vec</strong> (<em>array-like of float</em>) – vector to test</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>bool</em> – True if <cite>vec</cite> is a unit vector, False otherwise.</p>
+<dd class="field-even"><p><em>array of float</em> – Array of theta hat vectors, shape (3, Npoints)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -95,22 +82,6 @@ x axis, co-latitude is the angle with the positive z axis.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><em>array of float</em> – Array of phi hat vectors, shape (3, Npoints)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyradiosky.spherical_coords_transforms.r_hat">
-<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">r_hat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">phi</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#r_hat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.r_hat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the r hat unit vectors in cartesian coordinates for points on a sphere.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>theta, phi</strong> (<em>float</em>) – The co-latitude and azimuth coordinates, respectively, for a point
-on the sphere, in radians. Azimuth is defined with respect to the
-x axis, co-latitude is the angle with the positive z axis.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>array of float</em> – Array of r hat vectors, shape (3, Npoints)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -173,17 +144,46 @@ the beta/alpha basis.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pyradiosky.spherical_coords_transforms.theta_hat">
-<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">theta_hat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">phi</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#theta_hat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.theta_hat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the theta hat unit vectors in cartesian coordinates for points on a sphere.</p>
+<dt id="pyradiosky.spherical_coords_transforms.axis_angle_rotation_matrix">
+<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">axis_angle_rotation_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">axis</span></em>, <em class="sig-param"><span class="n">angle</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#axis_angle_rotation_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.axis_angle_rotation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the rotation matrix using Rodrigues’ rotation matrix formula.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>theta, phi</strong> (<em>float</em>) – The co-latitude and azimuth coordinates, respectively, for a point
-on the sphere, in radians. Azimuth is defined with respect to the
-x axis, co-latitude is the angle with the positive z axis.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>array-like of float</em>) – 3 element unit vector specifying the axis to rotate around.</p></li>
+<li><p><strong>angle</strong> (<em>float</em>) – angle to rotate by in radians</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>array of float</em> – Array of theta hat vectors, shape (3, Npoints)</p>
+<dd class="field-even"><p><em>array</em> – 3x3 rotation matrix to rotate vectors by <cite>angle</cite> around <cite>axis</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyradiosky.spherical_coords_transforms.is_orthogonal">
+<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">is_orthogonal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-15</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#is_orthogonal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.is_orthogonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for matrix orthogonality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>array-like of float</em>) – square matrix to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>bool</em> – True if <cite>matrix</cite> is orthogonal, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyradiosky.spherical_coords_transforms.is_unit_vector">
+<code class="sig-prename descclassname">pyradiosky.spherical_coords_transforms.</code><code class="sig-name descname">is_unit_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vec</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-15</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/spherical_coords_transforms.html#is_unit_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.spherical_coords_transforms.is_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for unit vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vec</strong> (<em>array-like of float</em>) – vector to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>bool</em> – True if <cite>vec</cite> is a unit vector, False otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
