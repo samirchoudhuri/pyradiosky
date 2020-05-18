@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>pyradiosky.skymodel &#8212; pyradiosky 0.1.dev1+ga063b79.head documentation</title>
+    <title>pyradiosky.skymodel &#8212; pyradiosky 0.1.dev1+g081e09b.add.rtd documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -165,22 +165,25 @@
 <span class="sd">    name : array_like of str</span>
 <span class="sd">        Unique identifier for each source component, shape (Ncomponents,).</span>
 <span class="sd">        Not used if nside is set.</span>
-<span class="sd">    ra : astropy Longitude object</span>
+<span class="sd">    ra : :class:`astropy.Longitude`</span>
 <span class="sd">        source RA in J2000 (or ICRS) coordinates, shape (Ncomponents,).</span>
-<span class="sd">    dec : astropy Latitude object</span>
+<span class="sd">    dec : :class:`astropy.Latitude`</span>
 <span class="sd">        source Dec in J2000 (or ICRS) coordinates, shape (Ncomponents,).</span>
 <span class="sd">    stokes : array_like of float</span>
 <span class="sd">        4 element vector giving the source [I, Q, U, V], shape (4, Nfreqs, Ncomponents).</span>
 <span class="sd">    spectral_type : str</span>
 <span class="sd">        Indicates how fluxes should be calculated at each frequency.</span>
+
 <span class="sd">        Options:</span>
+
 <span class="sd">        - &#39;flat&#39; : Flat spectrum.</span>
 <span class="sd">        - &#39;full&#39; : Flux is defined by a saved value at each frequency.</span>
-<span class="sd">        - &#39;subband&#39; : Flux is given at a set of band centers. (TODO)</span>
-<span class="sd">        - &#39;spectral_index&#39; : Flux is given at a reference frequency. (TODO)</span>
-<span class="sd">    freq_array : astropy Quantity</span>
+<span class="sd">        - &#39;subband&#39; : Flux is given at a set of band centers.</span>
+<span class="sd">        - &#39;spectral_index&#39; : Flux is given at a reference frequency.</span>
+
+<span class="sd">    freq_array : :class:`astropy.Quantity`</span>
 <span class="sd">        Array of frequencies that fluxes are provided for, shape (Nfreqs,).</span>
-<span class="sd">    reference_frequency : astropy Quantity</span>
+<span class="sd">    reference_frequency : :class:`astropy.Quantity`</span>
 <span class="sd">        Reference frequencies of flux values, shape (Ncomponents,).</span>
 <span class="sd">    spectral_index : array_like of float</span>
 <span class="sd">        Spectral index of each source, shape (Ncomponents).</span>
@@ -253,6 +256,9 @@
 
         <span class="n">desc</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Type of component, options are: &#39;healpix&#39;, &#39;point&#39;. &quot;</span>
+            <span class="s2">&quot;If component_type is &#39;healpix&#39;, the components are the pixels in a &quot;</span>
+            <span class="s2">&quot;HEALPix map. If the component_type is &#39;point&#39;, the components are&quot;</span>
+            <span class="s2">&quot;point-like sources.&quot;</span>
             <span class="s2">&quot;Determines which parameters are required.&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_component_type</span> <span class="o">=</span> <span class="n">UVParameter</span><span class="p">(</span>
@@ -675,9 +681,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        time : astropy Time object</span>
+<span class="sd">        time : :class:`astropy.Time`</span>
 <span class="sd">            Time to update positions for.</span>
-<span class="sd">        telescope_location : astropy EarthLocation object</span>
+<span class="sd">        telescope_location : :class:`astropy.EarthLocation`</span>
 <span class="sd">            Telescope location to update positions for.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">Time</span><span class="p">):</span>
@@ -687,7 +693,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">telescope_location</span><span class="p">,</span> <span class="p">(</span><span class="n">EarthLocation</span><span class="p">,</span> <span class="n">MoonLocation</span><span class="p">)):</span>
 
-            <span class="n">errm</span> <span class="o">=</span> <span class="s2">&quot;telescope_location must be an astropy EarthLocation object&quot;</span>
+            <span class="n">errm</span> <span class="o">=</span> <span class="s2">&quot;telescope_location must be an :class:`astropy.EarthLocation` object&quot;</span>
             <span class="k">if</span> <span class="n">hasmoon</span><span class="p">:</span>
                 <span class="n">errm</span> <span class="o">+=</span> <span class="s2">&quot; or a lunarsky MoonLocation object &quot;</span>
             <span class="n">errm</span> <span class="o">+=</span> <span class="s2">&quot;. &quot;</span>
@@ -778,8 +784,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        inds: array_like, optional</span>
-<span class="sd">            Index array to select components.</span>
-<span class="sd">            Defaults to all components.</span>
+<span class="sd">            Index array to select components. Defaults to all components.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -865,7 +870,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the local coherency in alt/az basis.</span>
 
-<span class="sd">        SkyModel.update_positions() must be run prior to this method.</span>
+<span class="sd">        :meth:`SkyModel.update_positions` must be run prior to this method.</span>
 
 <span class="sd">        The coherency is a 2x2 matrix giving electric field correlation in Jy.</span>
 <span class="sd">        It&#39;s specified on the object as a coherency in the ra/dec basis,</span>
@@ -873,7 +878,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        deprecated_location : EarthLocation object</span>
+<span class="sd">        deprecated_location : :class:`astropy.EarthLocation`</span>
 <span class="sd">            This keyword is deprecated. It is preserved to maintain backwards</span>
 <span class="sd">            compatibility and sets the EarthLocation on this SkyModel object.</span>
 
@@ -1057,7 +1062,7 @@
 <span class="sd">            Minimum stokes I flux to select [Jy]</span>
 <span class="sd">        max_flux : float</span>
 <span class="sd">            Maximum stokes I flux to select [Jy]</span>
-<span class="sd">        freq_range : astropy Quantity</span>
+<span class="sd">        freq_range : :class:`astropy.Quantity`</span>
 <span class="sd">            Frequency range over which the min and max flux tests should be performed.</span>
 <span class="sd">            Must be length 2. If None, use the range over which the object is defined.</span>
 <span class="sd">        run_check : bool</span>
@@ -1496,9 +1501,9 @@
 <span class="sd">            Part of expected Dec column. Should match only one column in the table.</span>
 <span class="sd">        flux_columns : str or list of str</span>
 <span class="sd">            Part of expected Flux column(s). Each one should match only one column in the table.</span>
-<span class="sd">        reference_frequency : astropy Quantity</span>
+<span class="sd">        reference_frequency : :class:`astropy.Quantity`</span>
 <span class="sd">            Reference frequency for flux values, assumed to be the same value for all rows.</span>
-<span class="sd">        freq_array : astropy Quantity</span>
+<span class="sd">        freq_array : :class:`astropy.Quantity`</span>
 <span class="sd">            Frequencies corresponding to flux_columns (should be same length).</span>
 <span class="sd">            Required for multiple flux columns.</span>
 <span class="sd">        return_table : bool, optional</span>
@@ -2465,7 +2470,7 @@
 <span class="sd">        Minimum stokes I flux to select [Jy]</span>
 <span class="sd">    max_flux : float</span>
 <span class="sd">        Maximum stokes I flux to select [Jy]</span>
-<span class="sd">    freq_range : astropy Quantity</span>
+<span class="sd">    freq_range : :class:`astropy.Quantity`</span>
 <span class="sd">        Frequency range over which the min and max flux tests should be performed.</span>
 <span class="sd">        Must be length 2. If None, use the range over which the object is defined.</span>
 
@@ -2525,9 +2530,9 @@
 <span class="sd">        Part of expected Dec column. Should match only one column in the table.</span>
 <span class="sd">    flux_columns : str or list of str</span>
 <span class="sd">        Part of expected Flux column(s). Each one should match only one column in the table.</span>
-<span class="sd">    reference_frequency : astropy Quantity</span>
+<span class="sd">    reference_frequency : :class:`astropy.Quantity`</span>
 <span class="sd">        Reference frequency for flux values, assumed to be the same value for all rows.</span>
-<span class="sd">    freq_array : astropy Quantity</span>
+<span class="sd">    freq_array : :class:`astropy.Quantity`</span>
 <span class="sd">        Frequencies corresponding to flux_columns (should be same length).</span>
 <span class="sd">        Required for multiple flux columns.</span>
 <span class="sd">    return_table : bool, optional</span>

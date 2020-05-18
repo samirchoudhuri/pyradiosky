@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>SkyModel Class &#8212; pyradiosky 0.1.dev1+ga063b79.head documentation</title>
+    <title>SkyModel Class &#8212; pyradiosky 0.1.dev1+g081e09b.add.rtd documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -53,22 +53,25 @@ The attribute Ncomponents gives the number of source components.</p>
 </ul>
 </dd>
 </dl>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+<dd class="field-odd"><ul>
 <li><p><strong>name</strong> (<em>array_like of str</em>) – Unique identifier for each source component, shape (Ncomponents,).
 Not used if nside is set.</p></li>
-<li><p><strong>ra</strong> (<em>astropy Longitude object</em>) – source RA in J2000 (or ICRS) coordinates, shape (Ncomponents,).</p></li>
-<li><p><strong>dec</strong> (<em>astropy Latitude object</em>) – source Dec in J2000 (or ICRS) coordinates, shape (Ncomponents,).</p></li>
+<li><p><strong>ra</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Longitude</span></code>) – source RA in J2000 (or ICRS) coordinates, shape (Ncomponents,).</p></li>
+<li><p><strong>dec</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Latitude</span></code>) – source Dec in J2000 (or ICRS) coordinates, shape (Ncomponents,).</p></li>
 <li><p><strong>stokes</strong> (<em>array_like of float</em>) – 4 element vector giving the source [I, Q, U, V], shape (4, Nfreqs, Ncomponents).</p></li>
-<li><p><strong>spectral_type</strong> (<em>str</em>) – Indicates how fluxes should be calculated at each frequency.
-Options:
-- ‘flat’ : Flat spectrum.
-- ‘full’ : Flux is defined by a saved value at each frequency.
-- ‘subband’ : Flux is given at a set of band centers. (TODO)
-- ‘spectral_index’ : Flux is given at a reference frequency. (TODO)</p></li>
-<li><p><strong>freq_array</strong> (<em>astropy Quantity</em>) – Array of frequencies that fluxes are provided for, shape (Nfreqs,).</p></li>
-<li><p><strong>reference_frequency</strong> (<em>astropy Quantity</em>) – Reference frequencies of flux values, shape (Ncomponents,).</p></li>
+<li><p><strong>spectral_type</strong> (<em>str</em>) – Indicates how fluxes should be calculated at each frequency.</p>
+<p>Options:</p>
+<ul class="simple">
+<li><p>‘flat’ : Flat spectrum.</p></li>
+<li><p>‘full’ : Flux is defined by a saved value at each frequency.</p></li>
+<li><p>‘subband’ : Flux is given at a set of band centers.</p></li>
+<li><p>‘spectral_index’ : Flux is given at a reference frequency.</p></li>
+</ul>
+</li>
+<li><p><strong>freq_array</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Array of frequencies that fluxes are provided for, shape (Nfreqs,).</p></li>
+<li><p><strong>reference_frequency</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Reference frequencies of flux values, shape (Ncomponents,).</p></li>
 <li><p><strong>spectral_index</strong> (<em>array_like of float</em>) – Spectral index of each source, shape (Ncomponents).
 None if spectral_type is not ‘spectral_index’.</p></li>
 <li><p><strong>nside</strong> (<em>int</em>) – nside parameter for HEALPix maps.</p></li>
@@ -103,13 +106,13 @@ Optionally check if the values are acceptable.</p>
 <dt id="pyradiosky.SkyModel.coherency_calc">
 <code class="sig-name descname">coherency_calc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">deprecated_location</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyradiosky/skymodel.html#SkyModel.coherency_calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyradiosky.SkyModel.coherency_calc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the local coherency in alt/az basis.</p>
-<p>SkyModel.update_positions() must be run prior to this method.</p>
+<p><a class="reference internal" href="#pyradiosky.SkyModel.update_positions" title="pyradiosky.SkyModel.update_positions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SkyModel.update_positions()</span></code></a> must be run prior to this method.</p>
 <p>The coherency is a 2x2 matrix giving electric field correlation in Jy.
 It’s specified on the object as a coherency in the ra/dec basis,
 but must be rotated into local alt/az.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>deprecated_location</strong> (<em>EarthLocation object</em>) – This keyword is deprecated. It is preserved to maintain backwards
+<dd class="field-odd"><p><strong>deprecated_location</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.EarthLocation</span></code>) – This keyword is deprecated. It is preserved to maintain backwards
 compatibility and sets the EarthLocation on this SkyModel object.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -297,8 +300,8 @@ acceptable range check will be done).</p></li>
 <li><p><strong>ra_column</strong> (<em>str</em>) – Part of expected RA column. Should match only one column in the table.</p></li>
 <li><p><strong>dec_column</strong> (<em>str</em>) – Part of expected Dec column. Should match only one column in the table.</p></li>
 <li><p><strong>flux_columns</strong> (<em>str or list of str</em>) – Part of expected Flux column(s). Each one should match only one column in the table.</p></li>
-<li><p><strong>reference_frequency</strong> (<em>astropy Quantity</em>) – Reference frequency for flux values, assumed to be the same value for all rows.</p></li>
-<li><p><strong>freq_array</strong> (<em>astropy Quantity</em>) – Frequencies corresponding to flux_columns (should be same length).
+<li><p><strong>reference_frequency</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Reference frequency for flux values, assumed to be the same value for all rows.</p></li>
+<li><p><strong>freq_array</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequencies corresponding to flux_columns (should be same length).
 Required for multiple flux columns.</p></li>
 <li><p><strong>return_table</strong> (<em>bool, optional</em>) – Whether to return the astropy table instead of a list of Source objects.</p></li>
 <li><p><strong>source_select_kwds</strong> (<em>dict, optional</em>) – Dictionary of keywords for source selection Valid options:</p>
@@ -384,7 +387,7 @@ required buffer should _not_ drift with time since the J2000 epoch.
 The default buffer has been tested around julian date 2457458.0.</p></li>
 <li><p><strong>min_flux</strong> (<em>float</em>) – Minimum stokes I flux to select [Jy]</p></li>
 <li><p><strong>max_flux</strong> (<em>float</em>) – Maximum stokes I flux to select [Jy]</p></li>
-<li><p><strong>freq_range</strong> (<em>astropy Quantity</em>) – Frequency range over which the min and max flux tests should be performed.
+<li><p><strong>freq_range</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Quantity</span></code>) – Frequency range over which the min and max flux tests should be performed.
 Must be length 2. If None, use the range over which the object is defined.</p></li>
 <li><p><strong>run_check</strong> (<em>bool</em>) – Option to check for the existence and proper shapes of parameters
 after downselecting data on this object (the default is True,
@@ -428,8 +431,8 @@ This is used by pyuvsim for sharing catalog data via MPI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>time</strong> (<em>astropy Time object</em>) – Time to update positions for.</p></li>
-<li><p><strong>telescope_location</strong> (<em>astropy EarthLocation object</em>) – Telescope location to update positions for.</p></li>
+<li><p><strong>time</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.Time</span></code>) – Time to update positions for.</p></li>
+<li><p><strong>telescope_location</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.EarthLocation</span></code>) – Telescope location to update positions for.</p></li>
 </ul>
 </dd>
 </dl>

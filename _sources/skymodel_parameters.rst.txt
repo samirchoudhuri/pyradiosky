@@ -27,7 +27,7 @@ are required for most kinds of catalog files.
      Ra/Dec coherency per component
 
 **component_type**
-     Type of component, options are: 'healpix', 'point'. Determines which parameters are required.
+     Type of component, options are: 'healpix', 'point'. If component_type is 'healpix', the components are the pixels in a HEALPix map. If the component_type is 'point', the components arepoint-like sources.Determines which parameters are required.
 
 **dec**
      Declination of components in ICRS coordinates.
