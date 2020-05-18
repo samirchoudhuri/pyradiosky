@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>pyradiosky &#8212; pyradiosky 0.1.dev1+g47dd124.add.rtd documentation</title>
+    <title>pyradiosky &#8212; pyradiosky 0.1.dev1+g8554e1a.add.rtd documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -60,53 +60,54 @@ all changes in our
 </div>
 <div class="section" id="documentation">
 <h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<p>Developer API documentation is hosted on
-<a class="reference external" href="https://pyradiosky.readthedocs.io">ReadTheDocs</a>.</p>
+<p>Developer API documentation is hosted
+<a class="reference external" href="https://radioastronomysoftwaregroup.github.io/pyradiosky/">here</a>.</p>
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Clone the repository using
-<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/RadioAstronomySoftwareGroup/pyradiosky.git</span></code></p>
-<p>Navigate into the pyradiosky directory and run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> (note
-that <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> is not recommended). Note that this
-will attempt to automatically install any missing dependencies. If you
-use anaconda or another package manager you might prefer to first
-install the dependencies as described in
-<a class="reference external" href="#dependencies">Dependencies</a>.</p>
-<p>To install without dependencies, run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-deps</span> <span class="pre">.</span></code></p>
-<div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Simple installation via pip is available for users, developers should
+follow the directions under <a class="reference external" href="#developer-installation">Developer
+Installation</a> below.</p>
+<p>A user-installation is achieved simply with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyradiosky</span></code>,
+or to get the bleeding-edge:
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">https://github.com/RadioAstronomySoftwareGroup/pyradiosky</span></code>.</p>
+<p>If you wish to work with HEALPix maps, you will need additional
+dependencies (i.e. astropy-healpix) installed, in that case install
+<code class="docutils literal notranslate"><span class="pre">pyradiosky</span></code> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyradiosky[healpix]</span></code></p>
+<p>If you wish to manage dependencies manually read on.</p>
+<p>If you are using <code class="docutils literal notranslate"><span class="pre">conda</span></code> to manage your environment, you may wish to
+install the following packages before installing <code class="docutils literal notranslate"><span class="pre">pyradiosky</span></code>:</p>
 <p>Required:</p>
 <ul class="simple">
-<li><p>numpy &gt;= 1.15</p></li>
-<li><p>scipy</p></li>
-<li><p>astropy &gt;= 4.0</p></li>
+<li><p>astropy&gt;=4.0</p></li>
 <li><p>h5py</p></li>
+<li><p>numpy&gt;=1.15</p></li>
+<li><p>scipy&gt;1.0.1</p></li>
 <li><p>pyuvdata</p></li>
 <li><p>setuptools_scm</p></li>
 </ul>
 <p>Optional:</p>
 <ul class="simple">
-<li><p>astropy-healpix (for working with beams in HEALPix formats)</p></li>
+<li><p>astropy-healpix</p></li>
 </ul>
-<p>The numpy and astropy versions are important, so make sure these are up
-to date.</p>
-<p>We suggest using conda to install all the dependencies. If you want to
-install astropy-healpix, you’ll need to add conda-forge as a channel
-(<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">config</span> <span class="pre">--add</span> <span class="pre">channels</span> <span class="pre">conda-forge</span></code>). Developers may wish to
-use the included <code class="docutils literal notranslate"><span class="pre">environment.yaml</span></code> file to create a new environment
-that will contain all the optional dependencies along with dependencies
-required for testing and development
-(<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">environment.yml</span></code>).</p>
-<p>If you do not want to use conda, the packages are also available on
-PyPI. You can install the optional dependencies via pip by specifying an
-option when you install pyradiosky, as in <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.[healpix]</span></code>
-which will install all the required packages for using the HEALPix
-functionality in pyradiosky. The options that can be passed in this way
-are: [healpix, dev]. The <code class="docutils literal notranslate"><span class="pre">healpix</span></code> enables various specific
-functionality while <code class="docutils literal notranslate"><span class="pre">dev</span></code> will install dependencies required for
-testing and development.</p>
-</div>
+<p>If you are developing <code class="docutils literal notranslate"><span class="pre">pyradiosky</span></code>, you will need to download and
+install the repository using
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/RadioAstronomySoftwareGroup/pyradiosky.git</span></code>.</p>
+<p>If you use conda, you may wish to use a fresh environment, in which case
+you can use the included <code class="docutils literal notranslate"><span class="pre">environment.yaml</span></code> file to make a conda
+environment with all the extra dependencies required for
+testing/development as well as the standard ones using
+<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">environment.yml</span></code>. If you do not wish to make a
+fresh dedicated environment, you should verify that the environment you
+are using contains the packages listed in that file. Then do a developer
+install of pyradiosky using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-deps</span> <span class="pre">-e</span> <span class="pre">.</span></code> if you do not want pip to install any
+missing requirements).</p>
+<p>If you do not use conda, after downloading the repository, install using
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[dev]</span></code> to install all the extra dependencies required
+for testing/development as well as the standard ones.</p>
+<p>Finally, install the pre-commit hook using <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">install</span></code> to
+help prevent committing code that does not meet our style guidelines.</p>
 <div class="section" id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
 <p>Uses the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> package to execute test suite. From the source

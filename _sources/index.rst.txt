@@ -37,59 +37,69 @@ all changes in our
 Documentation
 =============
 
-Developer API documentation is hosted on
-`ReadTheDocs <https://pyradiosky.readthedocs.io>`__.
+Developer API documentation is hosted
+`here <https://radioastronomysoftwaregroup.github.io/pyradiosky/>`__.
 
 Installation
 ============
 
-Clone the repository using
-``git clone https://github.com/RadioAstronomySoftwareGroup/pyradiosky.git``
+Simple installation via pip is available for users, developers should
+follow the directions under `Developer
+Installation <#developer-installation>`__ below.
 
-Navigate into the pyradiosky directory and run ``pip install .`` (note
-that ``python setup.py install`` is not recommended). Note that this
-will attempt to automatically install any missing dependencies. If you
-use anaconda or another package manager you might prefer to first
-install the dependencies as described in
-`Dependencies <#dependencies>`__.
+A user-installation is achieved simply with ``pip install pyradiosky``,
+or to get the bleeding-edge:
+``pip install https://github.com/RadioAstronomySoftwareGroup/pyradiosky``.
 
-To install without dependencies, run ``pip install --no-deps .``
+If you wish to work with HEALPix maps, you will need additional
+dependencies (i.e. astropy-healpix) installed, in that case install
+``pyradiosky`` with ``pip install pyradiosky[healpix]``
+
+If you wish to manage dependencies manually read on.
 
 Dependencies
-------------
+~~~~~~~~~~~~
+
+If you are using ``conda`` to manage your environment, you may wish to
+install the following packages before installing ``pyradiosky``:
 
 Required:
 
--  numpy >= 1.15
--  scipy
--  astropy >= 4.0
+-  astropy>=4.0
 -  h5py
+-  numpy>=1.15
+-  scipy>1.0.1
 -  pyuvdata
 -  setuptools_scm
 
 Optional:
 
--  astropy-healpix (for working with beams in HEALPix formats)
+-  astropy-healpix
 
-The numpy and astropy versions are important, so make sure these are up
-to date.
+Developer Installation
+~~~~~~~~~~~~~~~~~~~~~~
 
-We suggest using conda to install all the dependencies. If you want to
-install astropy-healpix, you’ll need to add conda-forge as a channel
-(``conda config --add channels conda-forge``). Developers may wish to
-use the included ``environment.yaml`` file to create a new environment
-that will contain all the optional dependencies along with dependencies
-required for testing and development
-(``conda env create -f environment.yml``).
+If you are developing ``pyradiosky``, you will need to download and
+install the repository using
+``git clone https://github.com/RadioAstronomySoftwareGroup/pyradiosky.git``.
 
-If you do not want to use conda, the packages are also available on
-PyPI. You can install the optional dependencies via pip by specifying an
-option when you install pyradiosky, as in ``pip install .[healpix]``
-which will install all the required packages for using the HEALPix
-functionality in pyradiosky. The options that can be passed in this way
-are: [healpix, dev]. The ``healpix`` enables various specific
-functionality while ``dev`` will install dependencies required for
-testing and development.
+If you use conda, you may wish to use a fresh environment, in which case
+you can use the included ``environment.yaml`` file to make a conda
+environment with all the extra dependencies required for
+testing/development as well as the standard ones using
+``conda env create -f environment.yml``. If you do not wish to make a
+fresh dedicated environment, you should verify that the environment you
+are using contains the packages listed in that file. Then do a developer
+install of pyradiosky using ``pip install -e .`` (or
+``pip install --no-deps -e .`` if you do not want pip to install any
+missing requirements).
+
+If you do not use conda, after downloading the repository, install using
+``pip install -e .[dev]`` to install all the extra dependencies required
+for testing/development as well as the standard ones.
+
+Finally, install the pre-commit hook using ``pre-commit install`` to
+help prevent committing code that does not meet our style guidelines.
 
 Tests
 -----
