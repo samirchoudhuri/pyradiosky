@@ -28,20 +28,20 @@ are very welcome, as are bug reports and feature requests. Please see
 our `guide on contributing <https://github.com/RadioAstronomySoftwareGroup/pyradiosky/tree/master/.github/CONTRIBUTING.md>`__
 
 Versioning
-==========
+----------
 
 We have not yet decided on a definitive versioning approach. We track
 all changes in our
 `changelog <https://github.com/RadioAstronomySoftwareGroup/pyradiosky/blob/master/CHANGELOG.md>`__.
 
 Documentation
-=============
+-------------
 
 Developer API documentation is hosted
 `here <https://radioastronomysoftwaregroup.github.io/pyradiosky/>`__.
 
 Installation
-============
+------------
 
 Simple installation via pip is available for users, developers should
 follow the directions under `Developer
@@ -108,7 +108,7 @@ Uses the ``pytest`` package to execute test suite. From the source
 pyradiosky directory run ``pytest`` or ``python -m pytest``.
 
 Maintainers
-===========
+-----------
 
 pyuvdata is maintained by the RASG Managers, which currently include:
 
