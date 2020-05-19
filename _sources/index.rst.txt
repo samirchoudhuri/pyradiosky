@@ -1,5 +1,5 @@
 .. pyradiosky documentation master file, created by
-   make_index.py on 2020-05-18
+   make_index.py on 2020-05-19
 
 pyradiosky
 ==========
