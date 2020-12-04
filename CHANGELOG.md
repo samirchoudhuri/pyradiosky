@@ -7,6 +7,9 @@
   `from_text_catalog`, `from_gleam_catalog` and `from_idl_catalog` to enable
   instantiation from different formats directly.
 
+### Changed
+- Changed default `spectral_type` for `read_gleam_catalog` to `subband` rather than `flat`.
+
 ### Fixed
 - A bug in the `download_gleam` utility method that caused missing columns for the
     `subband` spectral type
